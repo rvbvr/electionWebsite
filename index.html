@@ -4,6 +4,7 @@
     <title> User App </title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href='index.css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
@@ -33,25 +34,36 @@
         <br>
     </div>
 
-    <table style="width: 90%" id="tableElections">
-        <tr>
-            <th> State </th>
-            <th> Province </th>
-            <th> Prev Winner </th>
-            <th> Prev Votes Winner </th>
-            <th> Prev Runner Up </th>
-            <th> Prev Runner Up Votes </th>
-            <th> BN Votes </th>
-            <th> PKR Votes </th>
-            <th> PAS Votes </th>
-        </tr>
-        <br>
+    <div class="container" align = "center">
+        <span>
+            <p> BN: </p> <p id="bnVotes"> </p>
+            <p> PAS: </p> <p id="pasVotes"> </p>
+            <p> PKR: </p> <p id="pkrVotes"> </p>
+        </span>
+    </div>
 
-        <tbody>
+    <div align = 'center'>
 
-        </tbody>
-    </table>
+        <table style="width: 90%" id="tableElections">
+            <tr>
+                <th> State </th>
+                <th> Province </th>
+                <th> Prev Winner </th>
+                <th> Prev Votes Winner </th>
+                <th> Prev Runner Up </th>
+                <th> Prev Runner Up Votes </th>
+                <th> BN Votes </th>
+                <th> PKR Votes </th>
+                <th> PAS Votes </th>
+            </tr>
 
+
+            <tbody>
+
+            </tbody>
+        </table>
+
+    </div>
 
 
     <script>
@@ -62,6 +74,10 @@
         w = window.open('text.txt');
 
         var rowIndex = 1;
+
+        var bnOverall = 0;
+        var pasOverall = 0;
+        var pkrOverall = 0;
 
         databaseRef.once('value', function(snapshot) {
             snapshot.forEach(function(statesSnapshot) {
@@ -104,20 +120,23 @@
                                       +  Number(provinces[keyTwo]['BN']['PBRS']) +  Number(provinces[keyTwo]['BN']['PBS']) +  Number(provinces[keyTwo]['BN']['SDPD'])
                                       +  Number(provinces[keyTwo]['BN']['SUPP']) +  Number(provinces[keyTwo]['BN']['UPKO']) +  Number(provinces[keyTwo]['BN']['UPP']);
 
+                        bnOverall += totalBN;
 
                         // Add all PAS entries
 
                         var totalPAS =  Number(provinces[keyTwo]['PAS']['PAS']);
 
+                        pasOverall += totalPAS;
                         // Add all Pakatan entries
 
-                        var totalPakatan = Number(provinces[keyTwo]['BN']['Amanah']) +  Number(provinces[keyTwo]['BN']['DAP']) + Number(provinces[keyTwo]['BN']['PCS'])
-                                      +  Number(provinces[keyTwo]['BN']['PKR']) +  Number(provinces[keyTwo]['BN']['PWS']);
+                        var totalPakatan = Number(provinces[keyTwo]['Pakatan']['Amanah']) +  Number(provinces[keyTwo]['Pakatan']['DAP']) + Number(provinces[keyTwo]['Pakatan']['PCS'])
+                                      +  Number(provinces[keyTwo]['Pakatan']['PKR']) +  Number(provinces[keyTwo]['Pakatan']['PWS']);
 
+                        pkrOverall += totalPakatan;
 
                         bnVotes.appendChild(document.createTextNode(totalBN));
                         pkrVotes.appendChild(document.createTextNode(totalPakatan));
-                        pasVotes.appendChild(document.createTextNode(totalPas));
+                        pasVotes.appendChild(document.createTextNode(totalPAS));
 
                         rowIndex += 1;
                 }
@@ -147,6 +166,10 @@
 
             });
         });
+
+        document.getElementById('bnVotes').innerHTML = bnOverall;
+        document.getElementById('pasVotes').innerHTML = bnOverall;
+        document.getElementById('pkrVotes').innerHTML = bnOverall;
 
         function reload_page() {
             window.location.reload();
