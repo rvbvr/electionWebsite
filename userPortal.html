@@ -1,0 +1,130 @@
+<html lang = 'en'>
+<head>
+    <meta charset="utf-8">
+    <title> User App </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAGebbHSpS0tWjULf9Liqkl9oiy7VsQjNs",
+        authDomain: "malaysianelections.firebaseapp.com",
+        databaseURL: "https://malaysianelections.firebaseio.com",
+        projectId: "malaysianelections",
+        storageBucket: "malaysianelections.appspot.com",
+        messagingSenderId: "44968764791"
+      };
+
+      firebase.initializeApp(config);
+
+    </script>
+
+</head>
+
+<body>
+    <div align = 'center'>
+        <h1> User App </h1>
+        <br>
+        <br>
+    </div>
+
+    <table style="width: 90%" id="tableElections">
+        <tr>
+            <th> State </th>
+            <th> Province </th>
+            <th> Prev Winner </th>
+            <th> Prev Votes Winner </th>
+            <th> Prev Runner Up </th>
+            <th> Prev Runner Up Votes </th>
+        </tr>
+        <br>
+
+        <tbody>
+
+        </tbody>
+    </table>
+
+
+
+    <script>
+
+        var tableElections = document.getElementById('tableElections')
+        var databaseRef = firebase.database().ref('/state/');
+
+        w = window.open('text.txt');
+
+        var rowIndex = 1;
+
+        databaseRef.once('value', function(snapshot) {
+            snapshot.forEach(function(statesSnapshot) {
+                var stateVal = statesSnapshot.key;
+                var provinces = statesSnapshot.val();
+                // console.log(typeof provinces);
+                // var parsedData = JSON.parse(provinces);
+
+                for (var keyTwo in provinces) {
+                        var row = tableElections.insertRow(rowIndex);
+                        var cellState = row.insertCell(0);
+                        var cellProvince = row.insertCell(1);
+                        var cellPrevWinner = row.insertCell(2);
+                        var cellPrevVotesWinner = row.insertCell(3);
+                        var cellPrevRunUp = row.insertCell(4);
+                        var cellPrevVoteRunUp = row.insertCell(5);
+
+                        var actualPartyNamePrev = provinces[keyTwo]['winnerPrevElection'];
+                        actualPartyNamePrev = actualPartyNamePrev.split('(');
+                        actualPartyNamePrev = actualPartyNamePrev[1].split(')');
+
+                        var actualPartyNamePrevRunUp = provinces[keyTwo]['runnerUpPrevElection'];
+                        actualPartyNamePrevRunUp = actualPartyNamePrevRunUp.split('(');
+                        actualPartyNamePrevRunUp = actualPartyNamePrevRunUp[1].split(')');
+                        actualPartyNamePrevRunUp = actualPartyNamePrevRunUp[0].split(',');
+
+                        cellState.appendChild(document.createTextNode(stateVal));
+                        cellProvince.appendChild(document.createTextNode(keyTwo));
+                        cellPrevWinner.appendChild(document.createTextNode(actualPartyNamePrev[0]));
+                        cellPrevVotesWinner.appendChild(document.createTextNode(provinces[keyTwo]['votePrevElection']));
+                        cellPrevRunUp.appendChild(document.createTextNode(actualPartyNamePrevRunUp));
+                        cellPrevVoteRunUp.appendChild(document.createTextNode(provinces[keyTwo]['voteRunnerUp']));
+
+                        rowIndex += 1;
+                }
+
+                // console.log(parsedData);
+                // var i;
+                // var iLength = provinces.length;
+                // console.log(iLength);
+                // for (i = 0; i <= (iLength - 1); i++) {
+                //     console.log(provinces.text);
+                // }
+
+                // console.log(length(provinces[0]));
+                // provinces.forEach(function(eachProvince) {
+                //     var provinceName = eachProvince.key;
+                //
+                //     var row = tableElections.insertRow(rowIndex);
+                //     var cellState = row.insertCell(0);
+                //     var cellProvince = row.insertCell(1);
+                //     var cellName = row.insertCell(2);
+                //     cellState.appendChild(document.createTextNode(stateVal));
+                //     cellProvince.appendChild(document.createTextNode(provinceName));
+                //     cellName.appendChild(document.createTextNode('NULL'));
+                //
+                //     rowIndex += 1;
+                // });
+
+            });
+        });
+
+        function reload_page() {
+            window.location.reload();
+        }
+
+    </script>
+</body>
+</html>
