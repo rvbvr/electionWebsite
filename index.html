@@ -120,6 +120,15 @@
                         if (hotSeatCalculation < 0.05) {
                             row.style.backgroundColor = '#00ff00';
                         }
+
+                        var arrHotSeats = ["P004", "P037", "P044", "P075", "P076", "P089", "P098", "P108", "P121", "P124", "P125", "P143", "P148", "P160", "P162"]
+                        var k = 0;
+                        while (k <= (arrHotSeats.length - 1)) {
+                            if (keyTwo == arrHotSeats[k]) {
+                                row.style.backgroundColor = "#FFFF00";
+                            }
+                            k += 1;
+                        }
                         // Add all BN entries
                         var totalBN = Number(provinces[keyTwo]['BN']['BN']) +  Number(provinces[keyTwo]['BN']['LDP']) + Number(provinces[keyTwo]['BN']['PBB:'])
                                       +  Number(provinces[keyTwo]['BN']['PBRS']) +  Number(provinces[keyTwo]['BN']['PBS']) +  Number(provinces[keyTwo]['BN']['SDPD'])
@@ -147,7 +156,7 @@
                         pasVotes.appendChild(document.createTextNode(totalPAS));
 
                         rowIndex += 1;
-                        
+
                         document.getElementById('bnVotes').innerHTML = bnOverall;
                         document.getElementById('pasVotes').innerHTML = pasOverall;
                         document.getElementById('pkrVotes').innerHTML = pkrOverall;
