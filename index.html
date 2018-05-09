@@ -41,6 +41,9 @@
             <th> Prev Votes Winner </th>
             <th> Prev Runner Up </th>
             <th> Prev Runner Up Votes </th>
+            <th> BN Votes </th>
+            <th> PKR Votes </th>
+            <th> PAS Votes </th>
         </tr>
         <br>
 
@@ -76,6 +79,10 @@
                         var cellPrevRunUp = row.insertCell(4);
                         var cellPrevVoteRunUp = row.insertCell(5);
 
+                        var bnVotes = row.insertCell(6);
+                        var pkrVotes = row.insertCell(7);
+                        var pasVotes = row.insertCell(8);
+
                         var actualPartyNamePrev = provinces[keyTwo]['winnerPrevElection'];
                         actualPartyNamePrev = actualPartyNamePrev.split('(');
                         actualPartyNamePrev = actualPartyNamePrev[1].split(')');
@@ -91,6 +98,26 @@
                         cellPrevVotesWinner.appendChild(document.createTextNode(provinces[keyTwo]['votePrevElection']));
                         cellPrevRunUp.appendChild(document.createTextNode(actualPartyNamePrevRunUp));
                         cellPrevVoteRunUp.appendChild(document.createTextNode(provinces[keyTwo]['voteRunnerUp']));
+
+                        // Add all BN entries
+                        var totalBN = Number(provinces[keyTwo]['BN']['BN']) +  Number(provinces[keyTwo]['BN']['LDP']) + Number(provinces[keyTwo]['BN']['PBB:'])
+                                      +  Number(provinces[keyTwo]['BN']['PBRS']) +  Number(provinces[keyTwo]['BN']['PBS']) +  Number(provinces[keyTwo]['BN']['SDPD'])
+                                      +  Number(provinces[keyTwo]['BN']['SUPP']) +  Number(provinces[keyTwo]['BN']['UPKO']) +  Number(provinces[keyTwo]['BN']['UPP']);
+
+
+                        // Add all PAS entries
+
+                        var totalPAS =  Number(provinces[keyTwo]['PAS']['PAS']);
+
+                        // Add all Pakatan entries
+
+                        var totalPakatan = Number(provinces[keyTwo]['BN']['Amanah']) +  Number(provinces[keyTwo]['BN']['DAP']) + Number(provinces[keyTwo]['BN']['PCS'])
+                                      +  Number(provinces[keyTwo]['BN']['PKR']) +  Number(provinces[keyTwo]['BN']['PWS']);
+
+
+                        bnVotes.appendChild(document.createTextNode(totalBN));
+                        pkrVotes.appendChild(document.createTextNode(totalPakatan));
+                        pasVotes.appendChild(document.createTextNode(totalPas));
 
                         rowIndex += 1;
                 }
@@ -123,6 +150,10 @@
 
         function reload_page() {
             window.location.reload();
+        }
+
+        function cssCreation() {
+
         }
 
     </script>
