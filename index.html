@@ -125,25 +125,32 @@
                                       +  Number(provinces[keyTwo]['BN']['PBRS']) +  Number(provinces[keyTwo]['BN']['PBS']) +  Number(provinces[keyTwo]['BN']['SDPD'])
                                       +  Number(provinces[keyTwo]['BN']['SUPP']) +  Number(provinces[keyTwo]['BN']['UPKO']) +  Number(provinces[keyTwo]['BN']['UPP']);
 
-                        bnOverall += totalBN;
-
+                        bnOverall = bnOverall + totalBN;
+                        console.log('total bn' + totalBN);
+                        console.log('bn overall' + bnOverall);
                         // Add all PAS entries
 
                         var totalPAS =  Number(provinces[keyTwo]['PAS']['PAS']);
 
-                        pasOverall += totalPAS;
+                        pasOverall = pasOverall + totalPAS;
+                        console.log(totalPAS);
                         // Add all Pakatan entries
 
                         var totalPakatan = Number(provinces[keyTwo]['Pakatan']['Amanah']) +  Number(provinces[keyTwo]['Pakatan']['DAP']) + Number(provinces[keyTwo]['Pakatan']['PCS'])
                                       +  Number(provinces[keyTwo]['Pakatan']['PKR']) +  Number(provinces[keyTwo]['Pakatan']['PWS']);
 
-                        pkrOverall += totalPakatan;
+                        pkrOverall = pkrOverall + totalPakatan;
+                        console.log(totalPakatan);
 
                         bnVotes.appendChild(document.createTextNode(totalBN));
                         pkrVotes.appendChild(document.createTextNode(totalPakatan));
                         pasVotes.appendChild(document.createTextNode(totalPAS));
 
                         rowIndex += 1;
+                        
+                        document.getElementById('bnVotes').innerHTML = bnOverall;
+                        document.getElementById('pasVotes').innerHTML = pasOverall;
+                        document.getElementById('pkrVotes').innerHTML = pkrOverall;
                 }
 
                 // console.log(parsedData);
@@ -172,9 +179,13 @@
             });
         });
 
-        document.getElementById('bnVotes').innerHTML = bnOverall;
-        document.getElementById('pasVotes').innerHTML = bnOverall;
-        document.getElementById('pkrVotes').innerHTML = bnOverall;
+        console.log('bnoverall2NEW:    ' + bnOverall);
+        console.log(pasOverall);
+        console.log(pkrOverall);
+
+        // document.getElementById('bnVotes').innerHTML = bnOverall;
+        // document.getElementById('pasVotes').innerHTML = pasOverall;
+        // document.getElementById('pkrVotes').innerHTML = pkrOverall;
 
         function reload_page() {
             window.location.reload();
