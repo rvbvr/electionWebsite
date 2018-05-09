@@ -115,6 +115,11 @@
                         cellPrevRunUp.appendChild(document.createTextNode(actualPartyNamePrevRunUp));
                         cellPrevVoteRunUp.appendChild(document.createTextNode(provinces[keyTwo]['voteRunnerUp']));
 
+                        var hotSeatCalculation = (Number(provinces[keyTwo]['votePrevElection']) - Number(provinces[keyTwo]['voteRunnerUp']))/(Number(provinces[keyTwo]['voteRunnerUp']))
+
+                        if (hotSeatCalculation < 0.05) {
+                            row.style.backgroundColor = '#00ff00';
+                        }
                         // Add all BN entries
                         var totalBN = Number(provinces[keyTwo]['BN']['BN']) +  Number(provinces[keyTwo]['BN']['LDP']) + Number(provinces[keyTwo]['BN']['PBB:'])
                                       +  Number(provinces[keyTwo]['BN']['PBRS']) +  Number(provinces[keyTwo]['BN']['PBS']) +  Number(provinces[keyTwo]['BN']['SDPD'])
